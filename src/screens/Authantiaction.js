@@ -5,25 +5,25 @@ import Content from "../components/Content";
 import Login from "../components/Login";
 
 const Authantication = ({ onHandleAuth }) => {
-    return (
-        <SafeAreaView style={styles.bgWrapper}>
-            <Header title="Todo List" subTitle="Welcome back todo list app" />
-            <Content>
-                <Login onPressLogin={onHandleAuth} />
-            </Content>
-        </SafeAreaView>
-    )
+  return (
+    <SafeAreaView style={styles.bgWrapper}>
+      <Header title="Todo List" subTitle="Welcome back todo list app" />
+      <Content>
+        <Login onPressLogin={onHandleAuth} />
+      </Content>
+    </SafeAreaView>
+  );
 };
 
 export default Authantication;
 
 const styles = StyleSheet.create({
-    bgWrapper: {
-        flex: 1,
-        backgroundColor: AppColor.BgColor,
-        justifyContent: 'center',
-    },
-    bgInner: {
-        backgroundColor: AppColor.white,
-    }
-})
+  bgWrapper: {
+    flex: 1,
+    backgroundColor: AppColor.BgColor,
+    justifyContent: "center",
+  },
+  bgInner: {
+    backgroundColor: AppColor.white,
+  },
+});

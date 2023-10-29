@@ -7,41 +7,42 @@ import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 
 const MainApp = () => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const [isBiometricSpport, setIsBiometricSupport] = useState(false);
 
-    const [isBiometricSpport, setIsBiometricSupport] = useState(false);
+  const { isAuthanticate } = useSelector((state) => state.todos);
 
-    const { isAuthanticate } = useSelector(state => state.todos);
+  useEffect(() => {
+    (async () => {
+      const compatible = await LocalAuthantication.hasHardwareAsync();
+      setIsBiometricSupport(compatible);
+    })();
+  }, []);
 
-    useEffect(() => {
-        (async () => {
-            const compatible = await LocalAuthantication.hasHardwareAsync();
-            setIsBiometricSupport(compatible)
-        })();
-    }, [])
+  const onAuthanticate = () => {
+    if (isBiometricSpport) {
+      const auth = LocalAuthantication.authenticateAsync({
+        promptMessage: "Authanticate for todo app",
+      });
 
-    const onAuthanticate = () => {
-        if(isBiometricSpport){
-            const auth = LocalAuthantication.authenticateAsync({
-                promptMessage: 'Authanticate for todo app',
-            })
-    
-            auth.then(result => {
-                if (result.success) {
-                    dispatch(appAuthanticateAction(true))
-                }
-            })
-        }else {
-            Alert.alert("Do not have any biometric support");
+      auth.then((result) => {
+        if (result.success) {
+          dispatch(appAuthanticateAction(true));
         }
-        
-
+      });
+    } else {
+      Alert.alert("Do not have any biometric support");
     }
-    return (
-        // authantication flow validation
-        isAuthanticate ? <TodoList /> : <Authantication onHandleAuth={onAuthanticate} />
+  };
+  return (
+    // authantication flow validation
+    isAuthanticate ? (
+      <TodoList />
+    ) : (
+      <Authantication onHandleAuth={onAuthanticate} />
     )
-}
+  );
+};
 
-export default MainApp
+export default MainApp;
