@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, TextInput, TouchableOpacity, Text, Keyboard, Dimensions } from "react-native";
+import { StyleSheet, View, TextInput, TouchableOpacity, Text, Keyboard, Platform } from "react-native";
 import { AppColor } from "../asserts/colors";
 
 // bottom panel with textinput
@@ -10,7 +10,7 @@ const TextEnter = ({ inputRef, onChagne, onHandlePress, btnText }) => {
         const onShow = Keyboard.addListener('keyboardDidShow', (evt) => {
             setKeyboardHeight(evt.endCoordinates.height);
         });
-        const onHide = Keyboard.addListener('keyboardDidHide', (evt) => {
+        const onHide = Keyboard.addListener('keyboardDidHide', () => {
             setKeyboardHeight(0);
         });
         return () => {
@@ -20,7 +20,7 @@ const TextEnter = ({ inputRef, onChagne, onHandlePress, btnText }) => {
     }, []);
 
     return (
-        <View style={{ ...styles.BgTextEnter, bottom: keyboardHeight + 10 }}>
+        <View style={{ ...styles.BgTextEnter, bottom: Platform.OS === 'android' ? 40 : keyboardHeight + 10 }}>
             <TextInput ref={inputRef} style={styles.TextWrapper} placeholder="Enter your data" onChangeText={(e) => onChagne(e)} />
             <TouchableOpacity style={styles.BtnWrapper} onPress={onHandlePress}>
                 <Text style={styles.BtnWrapperText}>{btnText}</Text>

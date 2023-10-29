@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: AppColor.BgColor,
         justifyContent: 'center',
-        padding: 30,
     },
     bgInner: {
         backgroundColor: AppColor.white,

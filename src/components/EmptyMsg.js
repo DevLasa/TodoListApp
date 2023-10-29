@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     BgEmpty: {
         flexDirection: 'column',
         alignItems: 'center',
-        top: '50%',
     },
     BgEmptyText: {
         fontSize: 20,
