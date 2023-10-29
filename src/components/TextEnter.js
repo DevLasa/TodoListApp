@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, TextInput, TouchableOpacity, Text, Keyboard } from "react-native";
+import { StyleSheet, View, TextInput, TouchableOpacity, Text, Keyboard, Dimensions } from "react-native";
 import { AppColor } from "../asserts/colors";
 
 // bottom panel with textinput
 const TextEnter = ({ inputRef, onChagne, onHandlePress, btnText }) => {
-    const [keyboardStatus, setKeyboardStatus] = useState(false);
+    const [keyboardHeight, setKeyboardHeight] = useState(0);
 
     useEffect(() => {
-        const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-            setKeyboardStatus(true);
+        const onShow = Keyboard.addListener('keyboardDidShow', (evt) => {
+            setKeyboardHeight(evt.endCoordinates.height);
         });
-        const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-            setKeyboardStatus(false);
+        const onHide = Keyboard.addListener('keyboardDidHide', (evt) => {
+            setKeyboardHeight(0);
         });
         return () => {
-            showSubscription.remove();
-            hideSubscription.remove();
+            onShow.remove();
+            onHide.remove();
         };
     }, []);
 
     return (
-        <View style={{...styles.BgTextEnter, bottom: keyboardStatus ? 280 : 10}}>
+        <View style={{ ...styles.BgTextEnter, bottom: keyboardHeight + 10 }}>
             <TextInput ref={inputRef} style={styles.TextWrapper} placeholder="Enter your data" onChangeText={(e) => onChagne(e)} />
             <TouchableOpacity style={styles.BtnWrapper} onPress={onHandlePress}>
                 <Text style={styles.BtnWrapperText}>{btnText}</Text>
